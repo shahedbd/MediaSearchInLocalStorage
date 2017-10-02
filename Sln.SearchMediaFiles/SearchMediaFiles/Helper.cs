@@ -20,7 +20,12 @@ namespace SearchMediaFiles
                     {
                         foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
                         {
-                            if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()))
+                            //if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()) && Utilities.FileSizeInGB(f) > 0.99)
+                            //{
+                            //    filesFound.Add(f);
+                            //}
+
+                            if (Utilities.FileSizeInGB(f) > 0.99)
                             {
                                 filesFound.Add(f);
                             }

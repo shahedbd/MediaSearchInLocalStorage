@@ -1,4 +1,7 @@
-﻿namespace SearchMediaFiles
+﻿using System;
+using System.IO;
+
+namespace SearchMediaFiles
 {
     public static class Utilities
     {
@@ -14,6 +17,25 @@
             if (dir.Contains("$Recycle.Bin")) return true;
             if (dir.Contains("Config.Msi")) return true;
             return false;
+        }
+
+
+        public static double FileSizeInGB(string FileLoc)
+        {
+            double length = 0;
+            if (FileNameLenght(FileLoc) < 248)
+            {
+                length = new FileInfo(FileLoc).Length;
+            }
+
+            return Math.Round(length / (1024 * 1024 * 1024), 2); ;
+        }
+
+
+        public static double FileNameLenght(string FileLoc)
+        {
+            FileInfo oFileInfo = new FileInfo(FileLoc);
+            return oFileInfo.Name.Length;
         }
     }
 }

@@ -1,0 +1,5 @@
+﻿
+
+
+var abc=Utilities.FileSizeInGB(@"E:\Cine Plex\A Clockwork Orange (1971)\A Clockwork Orange (1971) [1080p].mp4");
+
