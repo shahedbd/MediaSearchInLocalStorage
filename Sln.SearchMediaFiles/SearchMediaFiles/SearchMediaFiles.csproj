@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
+    <Compile Include="LIB\EncryptionDatas.cs" />
+    <Compile Include="LIB\UpdatesMediaFiles.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
@@ -54,6 +56,12 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Notes\OldCode.txt" />
+    <Content Include="Output\TotalFoldersList.txt" />
+    <Content Include="Output\VideoMediaList.txt" />
+    <Content Include="Output\ImageMediaList.txt" />
+    <Content Include="Output\TotalFilesList.txt" />
+    <Content Include="Output\AudioMediaList.txt" />
+    <Content Include="Output\TMP.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

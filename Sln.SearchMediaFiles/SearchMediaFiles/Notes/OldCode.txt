@@ -3,3 +3,229 @@
 
 var abc=Utilities.FileSizeInGB(@"E:\Cine Plex\A Clockwork Orange (1971)\A Clockwork Orange (1971) [1080p].mp4");
 
+
+var abc = Utilities.OutputDir;
+var abc2 = Utilities.OutputDir2;
+G:\\TheGitCloning\\MediaSearchInLocalStorage\\Sln.SearchMediaFiles\\SearchMediaFiles\\bin\\Debug\\Output
+G:\\TheGitCloning\\MediaSearchInLocalStorage\\Sln.SearchMediaFiles\\SearchMediaFiles\\Output
+
+
+
+public static string VideoFileLocs = FilePathWriteTo("VideoMediaList.txt");
+public static string AudioFileLocs = FilePathWriteTo("AudioMediaList.txt");
+public static string ImageFileLocs = FilePathWriteTo("ImageMediaList.txt");
+public static string TotalFilesListLocs = FilePathWriteTo("TotalFilesList.txt");
+public static string TotalFoldersListLocs = FilePathWriteTo("TotalFoldersList.txt");
+
+
+public static readonly string[] searchTypes = { "mediaExtensionsVideo", "mediaExtensionsAudio", "mediaExtensionsImage", "TotalFiles", "TotalFolders" };
+
+
+
+
+
+ public static List<string> SearchAllDrives(string[] mediaExtensions)
+		{
+			List<string> filesFound = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
+			{
+				string[] DriveFolderList = Directory.GetDirectories(d.ToString());
+				foreach (var item in DriveFolderList)
+				{
+					if (!Utilities.IsIgnorable(item))
+					{
+						foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
+						{
+							if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()))
+							{
+								filesFound.Add(f);
+								Console.WriteLine(f);
+							}
+
+							//if (Utilities.FileSizeInGB(f) > 0.99)
+							//{
+							//    filesFound.Add(f);
+							//    Console.WriteLine(f);
+							//}
+						}
+					}
+				}
+
+			}
+
+			Console.WriteLine("Search Completed**********************************************************");
+			return filesFound;
+		}
+
+
+		public static List<string> SearchAllDrivesIMG(string[] mediaExtensions)
+		{
+			List<string> filesFound = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
+			{
+				string[] DriveFolderList = Directory.GetDirectories(d.ToString());
+				foreach (var item in DriveFolderList)
+				{
+					if (!Utilities.IsIgnorable(item))
+					{
+						foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
+						{
+							if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()))
+							{
+								filesFound.Add(f);
+								Console.WriteLine(f);
+							}
+						}
+					}
+				}
+
+			}
+			return filesFound;
+		}
+
+
+		public static List<string> SearchAllThroughDrives()
+		{
+			List<string> filesFound = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
+			{
+				string[] DriveFolderList = Directory.GetDirectories(d.ToString());
+				foreach (var item in DriveFolderList)
+				{
+					if (!Utilities.IsIgnorable(item))
+					{
+						foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
+						{
+							filesFound.Add(f);
+							Console.WriteLine(f);
+						}
+					}
+				}
+
+			}
+			return filesFound;
+		}
+
+
+		public static List<string> SearchInOSDrives()
+		{
+			List<string> filesFound = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name == "C:\\"))
+			{
+				string[] DriveFolderList = Directory.GetDirectories(d.ToString());
+				foreach (var item in DriveFolderList)
+				{
+					if (!Utilities.IsIgnorable(item))
+					{
+						foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
+						{
+							filesFound.Add(f);
+							Console.WriteLine(f);
+						}
+					}
+				}
+
+			}
+			return filesFound;
+		}
+
+
+		public static List<string> SearchFoldersInDrives()
+		{
+			List<string> filesFound = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
+			{
+				string[] DriveFolderList = Directory.GetDirectories(d.ToString());
+				foreach (var item in DriveFolderList)
+				{
+					if (!Utilities.IsIgnorable(item))
+					{
+						foreach (string f in Directory.GetDirectories(item, "*", SearchOption.AllDirectories))
+						{
+							filesFound.Add(f);
+							Console.WriteLine(f);
+						}
+					}
+				}
+
+			}
+			return filesFound;
+		}
+
+		public static List<string> Search()
+		{
+			var files = new List<string>();
+			foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady))
+			{
+				try
+				{
+					files.AddRange(Directory.GetFiles(d.RootDirectory.FullName, "*.txt", SearchOption.AllDirectories));
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e.Message);
+				}
+			}
+			return files;
+		}
+
+
+
+
+////Search video media
+				//List<string> VideoFilesList = Helper.SearchAllDrives(Utilities.mediaExtensionsVideo);
+				////List<string> AllFilesList = Helper.SearchAllThroughDrives();
+				////foreach (var item in VideoFilesList)
+				////{
+				////    Console.WriteLine(item);
+				////}
+				//Console.WriteLine("Total Files: " + VideoFilesList.Count);
+				//Console.WriteLine("Search Completed");
+
+
+				//VideoFilesList.Add("Total Files:" + VideoFilesList.Count);
+				//VideoFilesList.Add("Search Completed");
+
+
+				//File.WriteAllLines(Utilities.TotalFilesListLocs, VideoFilesList);
+				//Process.Start("notepad.exe", Utilities.TotalFilesListLocs);
+
+
+				////Search audio media
+				//List<string> AudioFilesList = Helper.SearchAllDrives(Utilities.mediaExtensionsAudio);
+				//foreach (var item in AudioFilesList)
+				//{
+				//    Console.WriteLine(item);
+				//}
+				//Console.WriteLine("Total Files: " + AudioFilesList.Count);
+				//Console.WriteLine("Search Completed");
+
+
+				////Search image media
+				//List<string> ImageFilesList = Helper.SearchAllDrivesIMG(Utilities.mediaExtensionsImage);
+				//Console.WriteLine("Total Files: " + ImageFilesList.Count);
+				//Console.WriteLine("Search Completed");
+
+				//List<string> AllFolderList = Helper.CountFoldersInDrives();
+				//Console.WriteLine("Total Folder: " + AllFolderList.Count);
+				//Console.WriteLine("Search Completed");
+
+
+
+
+
+
+				List<string> list = new List<string>();
+				list.Add("AAA");
+				list.Add("BBB");
+				list.Add("CCC");
+
+
+				var result = EncryptionDatas.EncodeTo64(list);
+
+				var result2 = EncryptionDatas.DecodeFrom64(result);
+
+
+				                var inputFile = Utilities.OutputDirCustom + "\\" + Utilities.fileNames[0];
+                var OutputFiles = @"G:\TheGitCloning\MediaSearchInLocalStorage\Sln.SearchMediaFiles\SearchMediaFiles\Output\VideoMediaList2.txt";
+                EncryptionDatas.DecryptFile(inputFile, OutputFiles);

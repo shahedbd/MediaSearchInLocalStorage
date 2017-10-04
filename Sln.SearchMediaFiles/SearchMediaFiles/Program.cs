@@ -1,32 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SearchMediaFiles.LIB;
+using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace SearchMediaFiles
 {
     class Program
     {
-        static void Main(string[] args)
+        public Program()
         {
 
-            //var abc = Utilities.FileSizeInGB(@"E:\Cine Plex\A Clockwork Orange (1971)\A Clockwork Orange (1971) [1080p].mp4");
+        }
 
-            //Search video media
-            List<string> VideoFilesList = Helper.SearchAllDrives(Utilities.mediaExtensionsVideo);
-            foreach (var item in VideoFilesList)
+        static void Main(string[] args)
+        {
+            try
             {
-                Console.WriteLine(item);
+
+                Console.WriteLine("Started....");
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Reset();
+                stopWatch.Start();
+
+
+                Thread FirstThread = new Thread(new ThreadStart(UpdatesMediaFiles.UpdateAllFiles));
+                FirstThread.Start();
+
+                Console.WriteLine("Total execution time: " + stopWatch.Elapsed.TotalSeconds);
+                Console.WriteLine("The End....");
+
             }
-            Console.WriteLine("Total Files: " + VideoFilesList.Count);
-            Console.WriteLine("Search Completed");
-
-
-            ////Search image media
-            //List<string> ImageFilesList = Helper.SearchAllDrivesIMG(Utilities.mediaExtensionsImage);
-            //Console.WriteLine("Total Files: " + ImageFilesList.Count);
-            //Console.WriteLine("Search Completed");
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             Console.ReadLine();
+
         }
     }
 }
