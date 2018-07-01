@@ -9,7 +9,14 @@ namespace SearchMediaFiles
         public static readonly string OutputDirCurrent = Path.Combine(Directory.GetCurrentDirectory(), "Output");
         public static readonly string OutputDirCustom = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())) + "\\Output";
 
-        public static readonly string[] fileNames = { "VideoMediaList.txt", "AudioMediaList.txt", "ImageMediaList.txt", "TotalFilesList.txt", "TotalFoldersList.txt" };
+        public static readonly string[] fileNames =
+            {
+                "VideoMediaList.txt",
+                "AudioMediaList.txt",
+                "ImageMediaList.txt",
+                "TotalFilesList.txt",
+                "TotalFoldersList.txt"
+            };
 
         public static readonly string[] mediaExtensionsVideo = { ".3g2", ".3gp", ".aaf", ".asf", ".avchd", ".avi", ".drc", ".flv", ".m2v", ".m4p", ".m4v", ".mkv", ".mng", ".mov", ".mp2", ".mp4", ".mpe", ".mpeg", ".mpg", ".mpv", ".mxf", ".nsv", ".ogg", ".ogv", ".qt", ".rm", ".rmvb", ".roq", ".svi", ".vob", ".webm", ".wmv", ".yuv", ".wmv" };
         public static readonly string[] mediaExtensionsAudio = new string[] { ".m4a", ".mp3", ".wma", ".3gp", ".aa", ".aac", ".aax", ".act", ".aiff", ".amr", ".ape", ".au", ".awb", ".dct", ".dss", ".dvf", ".flac", ".gsm", ".iklax", ".ivs", ".m4a", ".m4b", ".m4p", ".mmf", ".mp3", ".mpc", ".msv", ".ogg", ".oga", ".mogg", ".opus", ".ra", ".rm", ".raw", ".sln", ".tta", ".vox", ".wav", ".wma", "wv", "webm", ".8svx" };
@@ -40,6 +47,17 @@ namespace SearchMediaFiles
             }
 
             return Math.Round(length / (1024 * 1024 * 1024), 2); ;
+        }
+
+        public static double FileSizeInMB(string FileLoc)
+        {
+            double length = 0;
+            if (FileLoc.Length < 248)
+            {
+                length = new FileInfo(FileLoc).Length;
+            }
+
+            return Math.Round(length / (1024 * 1024), 2); ;
         }
 
 
