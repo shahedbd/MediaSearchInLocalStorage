@@ -1,7 +1,9 @@
-﻿using System;
+﻿using SearchMediaFiles.LIB;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SearchMediaFiles
 {
@@ -53,10 +55,10 @@ namespace SearchMediaFiles
         }
 
 
-        public static List<string> SearchInLocalDrivesByTypes(string[] mediaExtensions)
+        public static List<string> SearchInLocalDrivesByTypes(string[] mediaExtensions, int SaveIN)
         {
             List<string> filesFound = new List<string>();
-            foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name == "D:\\"))
+            foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
             {
                 string[] DriveFolderList = Directory.GetDirectories(d.ToString());
                 foreach (var item in DriveFolderList)
@@ -67,17 +69,23 @@ namespace SearchMediaFiles
                         {
                             if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()))
                             {
-                                if (Utilities.FileSizeInMB(f) > 500)
-                                {
-                                    filesFound.Add(f);
-                                    Console.WriteLine(f);
-                                }
+                                filesFound.Add(f);
+                                Console.WriteLine(f);
+
+                                //if (Utilities.FileSizeInMB(f) > 500)
+                                //{
+                                //    filesFound.Add(f);
+                                //    Console.WriteLine(f);
+                                //}
                             }
                         }
                     }
                 }
 
             }
+
+            var fileLoc = Utilities.OutputDirCustom + "\\" + Utilities.fileNames[SaveIN];
+            File.WriteAllLines(fileLoc, filesFound, Encoding.UTF8);
             return filesFound;
         }
 

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
+    <Compile Include="LIB\CommonEnums.cs" />
     <Compile Include="LIB\EncryptionDatas.cs" />
     <Compile Include="LIB\UpdatesMediaFiles.cs" />
     <Compile Include="Program.cs" />

@@ -1,6 +1,22 @@
 ﻿
 
 
+ Thread FirstThread = new Thread(new ThreadStart(UpdatesMediaFiles.UpdateAllFiles));
+ FirstThread.Start();
+
+
+  Thread thread1 = new Thread(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Video]));
+                thread1.Start();
+
+                Thread thread2 = new Thread(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Audio]));
+                thread2.Start();
+
+                Thread thread3 = new Thread(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Image]));
+                thread3.Start();
+
+
+
+
 var abc=Utilities.FileSizeInGB(@"E:\Cine Plex\A Clockwork Orange (1971)\A Clockwork Orange (1971) [1080p].mp4");
 
 
