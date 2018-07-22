@@ -51,11 +51,21 @@ namespace SearchMediaFiles
 
         public static double FileSizeInMB(string FileLoc)
         {
+            bool exists = File.Exists(FileLoc);
             double length = 0;
-            if (FileLoc.Length < 248)
+            try
             {
-                length = new FileInfo(FileLoc).Length;
+                if (FileLoc.Length < 248 && exists)
+                {
+                    length = new FileInfo(FileLoc).Length;
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
             return Math.Round(length / (1024 * 1024), 2); ;
         }

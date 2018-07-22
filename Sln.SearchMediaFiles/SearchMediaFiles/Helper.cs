@@ -55,7 +55,7 @@ namespace SearchMediaFiles
         }
 
 
-        public static List<string> SearchInLocalDrivesByTypes(string[] mediaExtensions, int SaveIN)
+        public static List<string> SearchInLocalDrivesByTypes(string[] mediaExtensions, int SaveIN, bool CheckSize)
         {
             List<string> filesFound = new List<string>();
             foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
@@ -69,14 +69,19 @@ namespace SearchMediaFiles
                         {
                             if (mediaExtensions.Contains(Path.GetExtension(f).ToLower()))
                             {
-                                filesFound.Add(f);
-                                Console.WriteLine(f);
-
-                                //if (Utilities.FileSizeInMB(f) > 500)
-                                //{
-                                //    filesFound.Add(f);
-                                //    Console.WriteLine(f);
-                                //}
+                                if (CheckSize)
+                                {
+                                    if (Utilities.FileSizeInMB(f) > 1000)
+                                    {
+                                        filesFound.Add(f);
+                                        Console.WriteLine(f);
+                                    }
+                                }
+                                else
+                                {
+                                    filesFound.Add(f);
+                                    Console.WriteLine(f);
+                                }
                             }
                         }
                     }
@@ -89,7 +94,7 @@ namespace SearchMediaFiles
             return filesFound;
         }
 
-        public static List<string> SearchInLocalDrivesAllFiles()
+        public static List<string> SearchInLocalDrivesAllFiles(bool CheckSize)
         {
             List<string> filesFound = new List<string>();
             foreach (DriveInfo d in DriveInfo.GetDrives().Where(x => x.IsReady && x.Name != "C:\\"))
@@ -101,7 +106,15 @@ namespace SearchMediaFiles
                     {
                         foreach (string f in Directory.GetFiles(item, "*.*", SearchOption.AllDirectories))
                         {
-                            if (Utilities.FileSizeInMB(f) > 1500)
+                            if (CheckSize)
+                            {
+                                if (Utilities.FileSizeInMB(f) > 1000)
+                                {
+                                    filesFound.Add(f);
+                                    Console.WriteLine(f);
+                                }
+                            }
+                            else
                             {
                                 filesFound.Add(f);
                                 Console.WriteLine(f);
@@ -111,6 +124,9 @@ namespace SearchMediaFiles
                 }
 
             }
+
+            var fileLoc = Utilities.OutputDirCustom + "\\" + Utilities.fileNames[3];
+            File.WriteAllLines(fileLoc, filesFound, Encoding.UTF8);
             return filesFound;
         }
 
