@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SearchMediaFiles
 {
@@ -27,10 +28,39 @@ namespace SearchMediaFiles
         public static readonly string[][] searchTypesList = new string[][] { mediaExtensionsVideo, mediaExtensionsAudio, mediaExtensionsImage, mediaExtensionsAll, mediaExtensionsFolders };
 
 
-
         public static bool IsIgnorable(string dir)
         {
             if (dir.EndsWith("System Volume Information")) return true;
+
+            if (dir.Contains("$RECYCLE.BIN")) return true;
+            if (dir.Contains("$Recycle.Bin")) return true;
+            if (dir.Contains("Config.Msi")) return true;
+            return false;
+        }
+
+
+        //Problem: access to the path is denied: Need denied folder list or if denied then exit or avoid exception
+
+        public static bool IsIgnorableTest(string dir)
+        {
+            if (dir != "C:\\Users") return true;
+
+
+            if (dir == "C:\\Windows" || dir == "C:\\Program Files" || dir == "C:\\Program Files (x86)"
+            || dir == "C:\\ProgramData") return true;
+
+            string driveLetter = Path.GetPathRoot(dir);
+            if (driveLetter == "C:\\")
+            {
+                DirectoryInfo dInfo = new DirectoryInfo(dir);
+                if (dInfo.Attributes.ToString().Contains("NotContentIndexed") ||
+                    dInfo.Attributes.ToString().Contains("System")) return true;
+            }
+
+
+            if (dir.EndsWith("System Volume Information")) return true;
+            if (dir.EndsWith("Documents and Settings")) return true;
+
             if (dir.Contains("$RECYCLE.BIN")) return true;
             if (dir.Contains("$Recycle.Bin")) return true;
             if (dir.Contains("Config.Msi")) return true;

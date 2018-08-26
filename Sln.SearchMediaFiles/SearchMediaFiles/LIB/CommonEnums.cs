@@ -13,5 +13,12 @@
         Folders = 4
     }
 
-
+    public enum SaveIn : int
+    {
+        VideoMediaList = 0,
+        AudioMediaList = 1,
+        ImageMediaList = 2,
+        TotalFilesList = 3,
+        TotalFoldersList = 4
+    }
 }

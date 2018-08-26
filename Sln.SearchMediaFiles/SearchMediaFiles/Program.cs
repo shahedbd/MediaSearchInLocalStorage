@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SearchMediaFiles
@@ -30,12 +28,16 @@ namespace SearchMediaFiles
                 //File.WriteAllLines(fileLoc, result, Encoding.UTF8);
 
                 //Helper.SearchInLocalDrivesAllFiles(true);
-                UsingStopWAndThread();
+                //UsingStopWAndThread();
 
                 //SearchInLocalDrivesAllFiles(true);
 
                 //Thread FirstThread = new Thread(new ThreadStart(UpdatesMediaFiles.UpdateAllFiles));
                 //FirstThread.Start();
+
+
+                //C drive test code
+                var result = Helper.TestCode(Utilities.searchTypesList[(int)MediaExtensionsTypes.Video], (int)SaveIn.VideoMediaList, true);
 
             }
             catch (Exception ex)
@@ -56,7 +58,7 @@ namespace SearchMediaFiles
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Reset();
             stopWatch.Start();
-            Task task1 = Task.Factory.StartNew(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Video], 0,false));
+            Task task1 = Task.Factory.StartNew(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Video], 0, false));
             Task task2 = Task.Factory.StartNew(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Audio], 1, false));
             Task task3 = Task.Factory.StartNew(() => Helper.SearchInLocalDrivesByTypes(Utilities.searchTypesList[(int)MediaExtensionsTypes.Image], 2, false));
 
